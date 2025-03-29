@@ -1,0 +1,18 @@
+{
+  "name": "n8n-deploy",
+  "version": "1.0.0",
+  "description": "N8N Workflow Automation",
+  "main": "index.js",
+  "scripts": {
+    "start": "n8n"
+  },
+  "dependencies": {
+    "n8n": "^0.230.0"  // Asegúrate de que la versión de N8N sea la correcta según tu proyecto
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "16.x"  // Asegúrate de usar la versión de Node.js adecuada (N8N generalmente requiere Node.js >=16)
+  },
+  "author": "",
+  "license": "MIT"
+}
