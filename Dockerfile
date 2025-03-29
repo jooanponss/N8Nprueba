@@ -1,14 +1,24 @@
-FROM n8nio/n8n
-RUN npm install n8n
+# 1. Usa una imagen base de Node.js (versión 16, que es compatible con N8N)
+FROM node:16
 
-# Configuración básica de autenticación (modifica las credenciales)
-ENV N8N_BASIC_AUTH_ACTIVE=true
-ENV N8N_BASIC_AUTH_USER=jooanponss
-ENV N8N_BASIC_AUTH_PASSWORD=pOKERqUIMnINAgUIDA
+# 2. Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
 
-# Configuración del webhook
-ENV WEBHOOK_TUNNEL_URL=https://tu-app.onrender.com
+# 3. Copia el archivo `package.json` y `package-lock.json` (si lo tienes)
+# Esto asegura que solo se instalen las dependencias primero, sin necesidad de copiar todo el código
+COPY package*.json ./
 
-# Exponer el puerto 5678
+# 4. Instala las dependencias de N8N
+RUN npm install
+
+# 5. Copia todo el código fuente del proyecto (todo lo demás)
+COPY . .
+
+# 6. Exponer el puerto 5678 (puerto por defecto en el que corre N8N)
 EXPOSE 5678
-CMD ["n8n", "start"]
+
+# 7. Establecer una variable de entorno para los permisos de configuración de N8N
+ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+
+# 8. Comando para iniciar N8N cuando el contenedor se ejecute
+CMD ["n8n"]
